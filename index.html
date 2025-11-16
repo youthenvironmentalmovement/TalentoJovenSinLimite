@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talentos Sin Límites — ONU ODS Style</title>
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- REACT -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+  <!-- BABEL -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- ESTILOS ONU / GLASS -->
+  <style>
+  body {
+    min-height: 100vh;
+    background-image: url("Talento.png");
+    background-size: cover;      /* El logo cubre todo */
+    background-repeat: no-repeat;
+    background-position: center; /* Centrado */
+    background-attachment: fixed;/* Efecto bonito */
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+  }
+
+    .glass-onu {
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.32);
+    }
+
+    .btn-onu {
+      background: #0033A0;
+      color: white;
+    }
+    .btn-onu:hover {
+      background: #002275;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800">
+
+  <!-- DONDE SE RENDERIZA TODO -->
+  <div id="root"></div>
+
+  <!-- =============== MÓDULO 1: ONBOARDING (ONU STYLE) =============== -->
+  <script type="text/babel">
+
+    function Module1_Onboarding({ onFinish }) {
+      const { useState } = React;
+
+      const [step, setStep] = useState(1);
+      const [profile, setProfile] = useState({
+        name: "",
+        disabilities: [],
+        talents: [],
+        preferences: [],
+        xp: 0,
+        level: 1
+      });
+
+      const disabilityOptions = [
+        { id:1, name:"Visual", icon:"👁️", adapt:["Lector de pantalla", "Alto contraste", "Navegación por voz"] },
+        { id:2, name:"Auditiva", icon:"👂", adapt:["Subtítulos automáticos", "Chat prioritario", "Sin videollamadas"] },
+        { id:3, name:"Motriz", icon:"🦾", adapt:["Teclado adaptado", "Control por voz", "Horarios flexibles"] },
+        { id:4, name:"Cognitiva", icon:"🧠", adapt:["Instrucciones claras", "Tiempo extra", "Recordatorios visuales"] },
+        { id:5, name:"Psicosocial", icon:"💭", adapt:["Ambiente tranquilo", "Pausas frecuentes", "Trabajo remoto"] },
+        { id:6, name:"Ninguna / Prefiero no decir", icon:"✨", adapt:[] }
+      ];
+
+      const talentOptions = [
+        { id:1, name:"Diseño", icon:"🎨", xp:50 },
+        { id:2, name:"Programación", icon:"💻", xp:50 },
+        { id:3, name:"Escritura", icon:"✍️", xp:50 },
+        { id:4, name:"Datos", icon:"📊", xp:50 },
+        { id:5, name:"Marketing", icon:"📱", xp:50 },
+        { id:6, name:"Atención Cliente", icon:"🎧", xp:50 },
+        { id:7, name:"Edición Video", icon:"🎬", xp:50 },
+        { id:8, name:"Traducción", icon:"🌐", xp:50 },
+        { id:9, name:"Community Manager", icon:"💬", xp:50 },
+        { id:10, name:"Ilustración", icon:"🖌️", xp:50 },
+        { id:11, name:"Audio", icon:"🎙️", xp:50 },
+        { id:12, name:"Fotografía", icon:"📸", xp:50 }
+      ];
+
+      const preferencesList = [
+        "Remoto 100%", "Híbrido", "Horario flexible", "Por proyectos",
+        "Medio tiempo", "Tiempo completo", "Freelance",
+        "Sin videollamadas", "Comunicación escrita", "Entregas asíncronas"
+      ];
+
+      const updateXP = (amount) => {
+        const newXP = profile.xp + amount;
+        const newLvl = Math.floor(newXP / 100) + 1;
+        setProfile({ ...profile, xp: newXP, level: newLvl });
+      };
+
+      const selectedDisabilities = disabilityOptions.filter(d =>
+        profile.disabilities.includes(d.id)
+      );
+      const suggestedAdaptations = Array.from(
+        new Set(selectedDisabilities.flatMap(d => d.adapt))
+      );
+
+      const handleFinish = () => {
+        onFinish(profile);
+      };
+
+      return (
+        <div className="min-h-screen flex items-center justify-center px-4 py-10">
+          <div className="max-w-5xl w-full">
+
+            {/* HEADER ONU */}
+            <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+              <div>
+             
+
+                <p className="text-xs uppercase tracking-[0.2em] text-[#0033A0]">
+                  Prototipo para Global Goals Jam 2025
+                </p>
+
+                <h1 className="text-3xl md:text-4xl font-extrabold text-[#0033A0]">
+                  Talentos Sin Límites
+                </h1>
+
+                <p className="text-slate-700 text-sm mt-1">
+                  Creado por el grupo <span className="font-semibold text-[#0033A0]">YEM – Youth Environmental Movement</span>
+                  {" "}del Colegio Real Royal School.
+                </p>
+
+                <p className="text-[11px] text-slate-500 mt-1">
+                  Enfocado en los <span style={{color:"#A21942"}} className="font-semibold">ODS 8</span>
+                  {" "}y <span style={{color:"#DD1367"}} className="font-semibold">ODS 10</span>.
+                </p>
+              </div>
+
+              {/* LOGOS */}
+              <div className="flex items-center gap-3">
+
+                <div className="w-40 h-30 rounded-xl glass-onu flex items-center justify-center overflow-hidden">
+                  <img src="YEM_logo.png" className="w-full h-full object-contain" />
+                </div>
+
+                <div className="w-40 h-30 rounded-xl glass-onu flex items-center justify-center overflow-hidden">
+                  <img src="ODS_logo.png" className="w-full h-full object-contain" />
+                </div>
+
+  
+              </div>
+            </div>
+
+            {/* CARD PRINCIPAL */}
+            <div className="relative rounded-3xl glass-onu shadow-xl">
+              <div className="relative p-6 md:p-8">
+
+                {/* HEADER CARD */}
+                  <div className="flex items-center gap-2 text-[11px] text-slate-600">
+                    <span className="px-3 py-1 rounded-full bg-white border border-slate-300">
+                      Paso {step} de 4
+                    </span>
+                    <span className="hidden md:inline text-slate-500">
+                      Completa tu perfil para ver roles adaptados a ti.
+                    </span>
+                  </div>
+
+                {/* STEP 1 */}
+                {step === 1 && (
+                  <div className="space-y-6">
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#0033A0] text-center">
+                      Empecemos por tu nombre ✨
+                    </h2>
+
+                    <p className="text-sm text-slate-600 text-center max-w-md mx-auto">
+                      Esta plataforma no te filtra.
+                      <span className="font-semibold text-[#0033A0]"> Adapta las oportunidades a ti.</span>
+                    </p>
+
+                    <div className="max-w-md mx-auto space-y-3">
+                      <label className="text-xs text-slate-500">
+                        Tu nombre
+                      </label>
+
+                      <input
+                        type="text"
+                        className="w-full p-4 rounded-2xl bg-white border border-slate-300 text-slate-700 placeholder-slate-400 
+                        focus:outline-none focus:ring-2 focus:ring-[#0033A0]"
+                        placeholder="Ej: María, Juan, Alex…"
+                        value={profile.name}
+                        onChange={(e) =>
+                          setProfile({ ...profile, name: e.target.value })
+                        }
+                      />
+                    </div>
+
+                    <button
+                      disabled={!profile.name}
+                      onClick={() => { setStep(2); updateXP(20); }}
+                      className="btn-onu w-full md:w-auto px-6 py-3 font-bold rounded-2xl mx-auto block 
+                      disabled:opacity-40 disabled:cursor-not-allowed transition"
+                    >
+                      Continuar →
+                    </button>
+                  </div>
+                )}
+                {/* STEP 2 — Discapacidades */}
+{step === 2 && (
+  <div className="space-y-6">
+
+    <h2 className="text-2xl md:text-3xl font-bold text-[#0033A0] text-center">
+      Necesidades / Discapacidades ♿
+    </h2>
+
+    <p className="text-sm text-slate-600 text-center max-w-xl mx-auto">
+      Escoge todas las que apliquen.
+      <span className="text-[#0033A0] font-semibold">
+        {" "}La plataforma activará adaptaciones automáticas.
+      </span>
+    </p>
+
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      {disabilityOptions.map(opt => {
+        const selected = profile.disabilities.includes(opt.id);
+
+        return (
+          <button
+            key={opt.id}
+            onClick={() => {
+              const isSelected = selected;
+              const newArr = isSelected
+                ? profile.disabilities.filter(x => x !== opt.id)
+                : [...profile.disabilities, opt.id];
+
+              setProfile({ ...profile, disabilities: newArr });
+            }}
+            className={
+              "relative p-3 rounded-2xl border text-left text-xs transition-all duration-200 " +
+              (selected
+                ? "bg-[#0033A0]/20 border-2 border-[#0033A0] shadow-lg scale-[1.03]"
+                : "bg-white border border-slate-300 hover:border-[#0033A0] hover:bg-[#0033A0]/5")
+            }
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl">{opt.icon}</span>
+              <span className="font-semibold text-slate-700">{opt.name}</span>
+            </div>
+
+            {selected && (
+              <span className="absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded-full bg-[#0033A0] text-white font-bold">
+                ✓
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+
+    {/* Adaptaciones dinámicas */}
+    <div className="mt-4 rounded-2xl glass-onu p-4">
+      <p className="text-xs font-semibold text-[#0033A0] mb-2 tracking-[0.18em] uppercase">
+        Adaptaciones sugeridas
+      </p>
+
+      {suggestedAdaptations.length === 0 ? (
+        <p className="text-sm text-slate-600">
+          Selecciona una necesidad para ver sus adaptaciones.
+        </p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {suggestedAdaptations.map((a, i) => (
+            <span
+              key={i}
+              className="px-3 py-1 rounded-full text-xs bg-[#0033A0]/10 border border-[#0033A0] text-[#0033A0]"
+            >
+              ✓ {a}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div className="flex flex-col md:flex-row gap-3 mt-4">
+      <button
+        onClick={() => setStep(1)}
+        className="w-full md:w-auto px-5 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition"
+      >
+        ← Atrás
+      </button>
+
+      <button
+        onClick={() => setStep(3)}
+        className="btn-onu w-full md:w-auto px-6 py-3 font-bold rounded-2xl transition"
+      >
+        Siguiente →
+      </button>
+    </div>
+
+  </div>
+)}
+
+
+                {/* STEP 3 — Talentos */}
+                {step === 3 && (
+                  <div className="space-y-6">
+
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#0033A0] text-center">
+                      Elige tus talentos principales 🎮
+                    </h2>
+
+  
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {talentOptions.map(t => {
+                        const selected = profile.talents.includes(t.id);
+
+                        return (
+                        <button
+  key={t.id}
+  onClick={() => {
+    const isSelected = selected;
+    const newArr = isSelected
+      ? profile.talents.filter(x => x !== t.id)
+      : [...profile.talents, t.id];
+
+    setProfile({ ...profile, talents: newArr });
+  }}
+  className={
+    "relative p-4 rounded-2xl border text-left text-sm transition-all duration-200 " +
+    (selected
+      ? "bg-[#0033A0]/20 border-2 border-[#0033A0] shadow-xl scale-[1.03]"
+      : "bg-white border border-slate-300 hover:border-[#0033A0] hover:bg-[#0033A0]/5")
+  }
+>
+  <div className="flex items-center gap-2 mb-1">
+    <span className="text-2xl">{t.icon}</span>
+    <span className="font-semibold text-slate-700">
+      {t.name}
+    </span>
+  </div>
+
+  {selected && (
+    <span className="absolute top-2 right-2 inline-flex items-center justify-center h-6 w-6 rounded-full bg-[#0033A0] text-white text-xs font-bold">
+      ✓
+    </span>
+  )}
+</button>
+
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-3 mt-4">
+                      <button
+                        onClick={() => setStep(2)}
+                        className="w-full md:w-auto px-5 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition"
+                      >
+                        ← Atrás
+                      </button>
+
+                      <button
+                        onClick={() => setStep(4)}
+                        className="btn-onu w-full md:w-auto px-6 py-3 font-bold rounded-2xl transition"
+                      >
+                        Siguiente →
+                      </button>
+                    </div>
+
+                  </div>
+                )}
+
+                {/* STEP 4 — Preferencias laborales */}
+                {step === 4 && (
+                  <div className="space-y-6">
+
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#0033A0] text-center">
+                      ¿Cómo prefieres trabajar? 🧩
+                    </h2>
+
+                    <p className="text-sm text-slate-600 text-center max-w-xl mx-auto">
+                      Esto ayuda al sistema a priorizar roles según tu estilo: remoto, híbrido,
+                      flexible, sin videollamadas, etc.
+                    </p>
+
+                    <div className="space-y-3">
+                      {preferencesList.map(pref => {
+                        const selected = profile.preferences.includes(pref);
+
+                        return (
+                          <button
+                            key={pref}
+                            onClick={() => {
+                              const isSelected = selected;
+                              const newArr = isSelected
+                                ? profile.preferences.filter(x => x !== pref)
+                                : [...profile.preferences, pref];
+
+                              setProfile({ ...profile, preferences: newArr });
+                            }}
+                            className={
+                              "w-full p-3 rounded-2xl border text-left text-sm transition flex items-center justify-between " +
+                              (selected
+                                ? "bg-[#0033A0]/10 border-[#0033A0] text-[#0033A0]"
+                                : "bg-white border-slate-300 text-slate-700 hover:border-[#0033A0]")
+                            }
+                          >
+                            <span>{pref}</span>
+
+                            {selected && (
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-[#0033A0] text-white font-semibold">
+                                Preferido
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-3 mt-4">
+                      <button
+                        onClick={() => setStep(3)}
+                        className="w-full md:w-auto px-5 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition"
+                      >
+                        ← Atrás
+                      </button>
+
+                      <button
+                        onClick={handleFinish}
+                        className="btn-onu w-full md:w-auto px-6 py-3 font-bold rounded-2xl transition"
+                      >
+                        Guardar perfil y crear CV orientado 🎉
+                      </button>
+                    </div>
+
+                  </div>
+                )}
+
+                {/* Progreso visual */}
+                <div className="flex justify-center gap-2 mt-6">
+                  {[1, 2, 3, 4].map(s => (
+                    <div
+                      key={s}
+                      className={
+                        "h-1.5 rounded-full transition-all " +
+                        (s === step ? "w-10 bg-[#0033A0]" : "w-6 bg-slate-300")
+                      }
+                    ></div>
+                  ))}
+                </div>
+
+              </div>
+            </div>
+
+            <p className="mt-4 text-[11px] text-slate-500 text-center max-w-2xl mx-auto">
+              Este es un prototipo educativo. No es un sistema real.
+            </p>
+
+          </div>
+        </div>
+      );
+    }
+  </script>
+
+  <!-- =================== MÓDULO 2 — CV ORIENTADO =================== -->
+  <script type="text/babel">
+  function Module2_CV({ profile, onFinish }) {
+    const { useState } = React;
+
+    const [cv, setCv] = useState({
+      headline: "",
+      about: "",
+      skills: "",
+      experience: "",
+      links: ""
+    });
+
+    const handleChange = (field, value) => {
+      setCv(prev => ({ ...prev, [field]: value }));
+    };
+
+    const handleContinue = () => {
+      onFinish(cv);
+    };
+
+    const skillsArray = cv.skills
+      ? cv.skills.split(",").map(s => s.trim()).filter(Boolean)
+      : [];
+
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F7FA]">
+        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+          {/* IZQUIERDA — FORM CV */}
+          <div>
+            <h2 className="text-xs uppercase tracking-widest text-[#0033A0] mb-2">
+              Paso 2 · CV orientado
+            </h2>
+
+            <h1 className="text-3xl font-extrabold text-[#0033A0] mb-2">
+              Construyamos tu hoja de vida 🌍
+            </h1>
+
+            <p className="text-sm text-slate-600 mb-6">
+              Usaremos tus talentos, preferencias y adaptaciones
+              para crear un CV accesible e inclusivo.
+            </p>
+
+            {/* FORMULARIO */}
+            <div className="space-y-4">
+
+              {/* Titular */}
+              <div>
+                <label className="text-xs text-slate-500 block mb-1">
+                  Titular profesional
+                </label>
+                <input
+                  className="w-full p-3 rounded-xl bg-white border border-slate-300
+                  focus:outline-none focus:ring-2 focus:ring-[#0033A0]/40 text-sm"
+                  placeholder="Ej: Diseñadora UI/UX enfocada en accesibilidad"
+                  value={cv.headline}
+                  onChange={(e) => handleChange("headline", e.target.value)}
+                />
+              </div>
+
+              {/* Sobre mí */}
+              <div>
+                <label className="text-xs text-slate-500 block mb-1">
+                  Sobre ti
+                </label>
+                <textarea
+                  className="w-full p-3 rounded-xl bg-white border border-slate-300 h-24 text-sm
+                  focus:outline-none focus:ring-2 focus:ring-[#0033A0]/40"
+                  placeholder="Cuenta quién eres, tu motivación y tu forma de trabajar…"
+                  value={cv.about}
+                  onChange={(e) => handleChange("about", e.target.value)}
+                ></textarea>
+              </div>
+
+              {/* Habilidades */}
+              <div>
+                <label className="text-xs text-slate-500 block mb-1">
+                  Habilidades (separadas por coma)
+                </label>
+                <input
+                  className="w-full p-3 rounded-xl bg-white border border-slate-300
+                  focus:outline-none focus:ring-2 focus:ring-[#0033A0]/40 text-sm"
+                  placeholder="Ej: Figma, Storytelling, SQL…"
+                  value={cv.skills}
+                  onChange={(e) => handleChange("skills", e.target.value)}
+                />
+              </div>
+
+              {/* Experiencia */}
+              <div>
+                <label className="text-xs text-slate-500 block mb-1">
+                  Experiencia / proyectos
+                </label>
+                <textarea
+                  className="w-full p-3 rounded-xl bg-white border border-slate-300 h-24 text-sm
+                  focus:outline-none focus:ring-2 focus:ring-[#0033A0]/40"
+                  placeholder="Incluye proyectos, voluntariados, logros…"
+                  value={cv.experience}
+                  onChange={(e) => handleChange("experience", e.target.value)}
+                ></textarea>
+              </div>
+
+              {/* Links */}
+              <div>
+                <label className="text-xs text-slate-500 block mb-1">Links</label>
+                <input
+                  className="w-full p-3 rounded-xl bg-white border border-slate-300
+                  focus:outline-none focus:ring-2 focus:ring-[#0033A0]/40 text-sm"
+                  placeholder="Portafolio, LinkedIn, GitHub…"
+                  value={cv.links}
+                  onChange={(e) => handleChange("links", e.target.value)}
+                />
+              </div>
+
+              <button
+                onClick={handleContinue}
+                className="btn-onu w-full mt-3 px-6 py-3 font-bold rounded-xl transition"
+              >
+                Ver roles adaptados →
+              </button>
+
+            </div>
+          </div>
+
+          {/* VISTA PREVIA CV */}
+          <div className="relative">
+
+            {/* fondo decorativo */}
+            <div className="absolute -top-10 right-0 w-40 h-40 bg-[#0033A0]/10 blur-3xl rounded-full"></div>
+
+            <div className="relative rounded-3xl bg-white/60 border border-white/30 
+            backdrop-blur-xl shadow-2xl p-6">
+
+              <p className="text-xs uppercase tracking-widest text-slate-500 mb-3">
+                Vista previa · CV
+              </p>
+
+              <h2 className="text-xl font-bold text-[#0033A0]">
+                {profile?.name || "Tu nombre"}
+              </h2>
+
+              <p className="text-sm text-[#0033A0]/70 font-medium mt-1">
+                {cv.headline || "Aquí aparecerá tu titular profesional"}
+              </p>
+
+              {/* CHIPS */}
+              <div className="flex flex-wrap gap-2 mt-4 text-xs">
+
+                {profile?.disabilities?.length > 0 && (
+                  <span className="px-3 py-1 bg-[#DD1367]/10 border border-[#DD1367] 
+                  text-[#DD1367] rounded-full">
+                    Adaptaciones: {profile.disabilities.length}
+                  </span>
+                )}
+
+                {profile?.talents?.length > 0 && (
+                  <span className="px-3 py-1 bg-[#0033A0]/10 border border-[#0033A0] 
+                  text-[#0033A0] rounded-full">
+                    Talentos: {profile.talents.length}
+                  </span>
+                )}
+
+                {profile?.preferences?.length > 0 && (
+                  <span className="px-3 py-1 bg-[#A21942]/10 border border-[#A21942] 
+                  text-[#A21942] rounded-full">
+                    Preferencias: {profile.preferences.length}
+                  </span>
+                )}
+              </div>
+
+              {/* Secciones */}
+              <div className="mt-6 space-y-4 text-sm">
+
+                <div>
+                  <h3 className="text-xs font-semibold uppercase text-slate-500">
+                    Sobre mí
+                  </h3>
+                  <p className="text-slate-700 whitespace-pre-line">
+                    {cv.about || "Aquí irá tu descripción personal…"}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-xs font-semibold uppercase text-slate-500">
+                    Habilidades
+                  </h3>
+
+                  {skillsArray.length === 0 ? (
+                    <p className="text-slate-500 text-xs">Agrega habilidades…</p>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {skillsArray.map((s, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 text-xs bg-white border 
+                          border-slate-300 rounded-full"
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <h3 className="text-xs font-semibold uppercase text-slate-500">
+                    Experiencia
+                  </h3>
+                  <p className="text-slate-700 whitespace-pre-line">
+                    {cv.experience || "Añade proyectos o experiencias."}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-xs font-semibold uppercase text-slate-500">
+                    Links
+                  </h3>
+                  {cv.links ? (
+                    <ul className="space-y-1 text-[#0033A0] text-xs">
+                      {cv.links.split(",").map((url, i) => (
+                        <li key={i}>• {url.trim()}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-slate-500 text-xs">Agrega links…</p>
+                  )}
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+  </script>
+
+ <!-- =============== MÓDULO 3 — DASHBOARD ONU =============== -->
+<script type="text/babel">
+
+function Module3_Dashboard({ profile, cv }) {
+
+  // ============================================
+  // 12 TALENTOS → 12 TRABAJOS RELACIONADOS
+  // Cada rol tiene "talentId" que conecta con talentOptions del onboarding
+  // ============================================
+  const roles = [
+    {
+      id: 1,
+      talentId: 1, // Diseño
+      title: "Diseñador UI/UX Junior",
+      company: "TechStart Inc.",
+      location: "Remoto",
+      match: 95,
+      type: "Tiempo completo",
+      salary: "$800-1200/mes",
+      adaptations: ["Lector de pantalla", "Horario flexible", "Mentoría semanal"],
+      description: "Diseño accesible de interfaces web.",
+      skills: ["Figma", "Accesibilidad", "Responsive Design"],
+    },
+    {
+      id: 2,
+      talentId: 2, // Programación
+      title: "Desarrollador Frontend Junior",
+      company: "CodeWave",
+      location: "Híbrido",
+      match: 92,
+      type: "Tiempo completo",
+      salary: "$900-1400/mes",
+      adaptations: ["Revisión asíncrona", "Documentación accesible", "Subtítulos"],
+      description: "Implementación de interfaces accesibles.",
+      skills: ["React", "HTML", "CSS", "Git"],
+    },
+    {
+      id: 3,
+      talentId: 3, // Escritura
+      title: "Content Writer Bilingüe",
+      company: "Digital Dreams",
+      location: "Remoto",
+      match: 88,
+      type: "Freelance",
+      salary: "$15-25/hora",
+      adaptations: ["Sin videollamadas", "Chat prioritario"],
+      description: "Redacción para blogs y redes sociales.",
+      skills: ["SEO", "Copywriting", "Storytelling"],
+    },
+    {
+      id: 4,
+      talentId: 4, // Datos
+      title: "Analista de Datos Junior",
+      company: "InsightCorp",
+      location: "Remoto",
+      match: 90,
+      type: "Tiempo completo",
+      salary: "$1000-1500/mes",
+      adaptations: ["Guías estructuradas", "Mentoría", "Tareas asíncronas"],
+      description: "Análisis de datos y dashboards accesibles.",
+      skills: ["Excel", "SQL", "Python"],
+    },
+    {
+      id: 5,
+      talentId: 5, // Marketing
+      title: "Especialista de Marketing Digital",
+      company: "BrandLab",
+      location: "Remoto",
+      match: 89,
+      type: "Tiempo completo",
+      salary: "$900-1300/mes",
+      adaptations: ["Subtítulos", "Horarios flexibles"],
+      description: "Campañas digitales con enfoque inclusivo.",
+      skills: ["Ads", "Analytics", "Copywriting"],
+    },
+    {
+      id: 6,
+      talentId: 6, // Atención al cliente
+      title: "Agente de Servicio al Cliente",
+      company: "HelpNow",
+      location: "Remoto",
+      match: 87,
+      type: "Medio tiempo",
+      salary: "$600-900/mes",
+      adaptations: ["Chat escrito", "Trabajo remoto", "Guiones claros"],
+      description: "Atención al cliente con protocolos accesibles.",
+      skills: ["Comunicación", "Empatía", "Resolución"],
+    },
+    {
+      id: 7,
+      talentId: 7, // Edición video
+      title: "Editor de Video Junior",
+      company: "MediaHouse",
+      location: "Remoto",
+      match: 91,
+      type: "Por proyectos",
+      salary: "$20-40/hora",
+      adaptations: ["Trabajo asíncrono", "Instrucciones claras"],
+      description: "Edición de videos sociales y educativos.",
+      skills: ["Premiere", "After Effects"],
+    },
+    {
+      id: 8,
+      talentId: 8, // Traducción
+      title: "Traductor Español–Inglés",
+      company: "LinguaHub",
+      location: "Remoto",
+      match: 89,
+      type: "Freelance",
+      salary: "$12-22/hora",
+      adaptations: ["Sin videollamadas", "Chat"],
+      description: "Traducción de documentos, guías y contenido digital.",
+      skills: ["Inglés", "Gramática", "Redacción"],
+    },
+    {
+      id: 9,
+      talentId: 9, // Community manager
+      title: "Community Manager Junior",
+      company: "SocialFlow",
+      location: "Híbrido",
+      match: 86,
+      type: "Tiempo completo",
+      salary: "$800-1200/mes",
+      adaptations: ["Horarios flexibles", "Trabajo híbrido"],
+      description: "Gestión de redes y estrategia digital.",
+      skills: ["Creatividad", "Copywriting"],
+    },
+    {
+      id: 10,
+      talentId: 10, // Ilustración
+      title: "Ilustrador Digital",
+      company: "ArtWave",
+      location: "Remoto",
+      match: 90,
+      type: "Por proyectos",
+      salary: "$20-40/hora",
+      adaptations: ["Trabajo asíncrono", "Guías visuales"],
+      description: "Ilustraciones para campañas y contenido educativo.",
+      skills: ["Procreate", "Photoshop"],
+    },
+    {
+      id: 11,
+      talentId: 11, // Audio
+      title: "Editor de Audio Junior",
+      company: "SoundWorks",
+      location: "Remoto",
+      match: 88,
+      type: "Freelance",
+      salary: "$20-35/hora",
+      adaptations: ["Guías claras", "Tareas asíncronas"],
+      description: "Edición de podcasts e intros.",
+      skills: ["Audacity", "Adobe Audition"],
+    },
+    {
+      id: 12,
+      talentId: 12, // Fotografía
+      title: "Fotógrafo de Producto",
+      company: "ShopFocus",
+      location: "Local",
+      match: 85,
+      type: "Por proyectos",
+      salary: "$25-50/foto",
+      adaptations: ["Horarios flexibles"],
+      description: "Fotografía comercial de productos.",
+      skills: ["Iluminación", "Edición"],
+    }
+  ];
+
+  // ============================================
+  // FILTRO AUTOMÁTICO SEGÚN TALENTOS DEL USUARIO
+  // ============================================
+  const filteredRoles = roles.filter(role =>
+    profile.talents.includes(role.talentId)
+  );
+
+  // Ordenar por % match (mayor primero)
+  filteredRoles.sort((a, b) => b.match - a.match);
+
+  const earnedBadges = 2;
+
+  return (
+    <div className="min-h-screen px-4 py-12 bg-[#F5F7FA]">
+      <div className="max-w-6xl mx-auto space-y-8">
+
+        {/* HEADER */}
+        <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-[#0033A0]">
+              Paso 3 · Dashboard inteligente
+            </p>
+
+            <h1 className="text-3xl font-extrabold text-[#0033A0]">
+              Roles adaptados para ti 🎯
+            </h1>
+
+            <p className="text-sm text-slate-600">
+              Hola,{" "}
+              <span className="font-semibold text-[#0033A0]">
+                {profile?.name || "Talento"}
+              </span>
+              . Estas oportunidades se ajustan a tu perfil.
+            </p>
+          </div>
+
+          <div className="text-right text-xs text-slate-500">
+            <p>ODS 8 – Trabajo decente</p>
+            <p>ODS 10 – Reducción desigualdades</p>
+          </div>
+        </header>
+
+        {/* CONTENEDOR PRINCIPAL ROLES */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          {/* LISTA DE ROLES */}
+          <div className="lg:col-span-2 space-y-4">
+
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+              Roles recomendados
+            </h2>
+
+            {filteredRoles.length === 0 && (
+              <p className="text-sm text-slate-600">
+                No encontramos roles según tus talentos.  
+                Intenta agregar más talentos.
+              </p>
+            )}
+
+            {filteredRoles.map(role => (
+              <div
+                key={role.id}
+                className="rounded-2xl bg-white/70 backdrop-blur-xl border border-slate-200 p-5 shadow transition"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-[#0033A0]">{role.title}</h3>
+                    <p className="text-xs text-slate-600">
+                      {role.company} · {role.location} · {role.type}
+                    </p>
+                  </div>
+
+                  <span className="px-3 py-1 rounded-full bg-[#0033A0] text-white text-xs font-semibold">
+                    {role.match}% Match
+                  </span>
+                </div>
+
+                <p className="text-sm text-slate-700 mt-3">{role.description}</p>
+
+                <div className="flex flex-wrap gap-2 mt-3 text-xs">
+                  {role.skills.map((s, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-white border border-slate-300 rounded-full text-slate-700"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="text-xs mt-4 text-slate-500 font-semibold">
+                  Adaptaciones:
+                </p>
+
+                <div className="flex flex-wrap gap-2 mt-1 text-xs">
+                  {role.adaptations.map((a, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-[#DD1367]/10 border border-[#DD1367] text-[#DD1367] rounded-full"
+                    >
+                      ✓ {a}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+          </div>
+
+          {/* PANEL DE CV */}
+          <div className="space-y-4">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+              Tu CV orientado
+            </h2>
+
+            <div className="rounded-2xl bg-white p-4 border border-slate-200 shadow text-sm">
+
+              <p className="text-xs text-slate-500 mb-1">Nombre</p>
+              <p className="text-[#0033A0] font-semibold">
+                {profile?.name || "Tu nombre"}
+              </p>
+
+              <p className="text-xs text-slate-500 mt-3 mb-1">
+                Titular profesional
+              </p>
+              <p className="text-slate-700">{cv?.headline || "—"}</p>
+
+              <p className="text-xs text-slate-500 mt-3 mb-1">Preferencias</p>
+
+              {profile?.preferences?.length > 0 ? (
+                <ul className="text-xs text-slate-700 space-y-1">
+                  {profile.preferences.map((p, i) => (
+                    <li key={i}>• {p}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-xs text-slate-500">No definidas</p>
+              )}
+
+              <p className="text-xs text-slate-500 mt-3 mb-1">Talentos</p>
+              <p className="text-xs text-slate-700">
+                {profile?.talents?.length || 0} seleccionados
+              </p>
+
+              <p className="text-[10px] text-slate-400 mt-4">
+                Este panel resume tu información para entender las recomendaciones.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <p className="mt-6 text-[11px] text-slate-500 text-center max-w-2xl mx-auto">
+        Prototipo “Talentos Sin Límites” — YEM Youth Environmental Movement — Global Goals Jam 2025.  
+        No es un sistema funcional real.
+      </p>
+
+    </div>
+  );
+}
+</script>
+
+
+  <!-- =============== APP PRINCIPAL =============== -->
+  <script type="text/babel">
+
+  function App() {
+    const { useState } = React;
+
+    const [currentScreen, setCurrentScreen] = useState("onboarding");
+    const [profile, setProfile] = useState(null);
+    const [cvData, setCvData] = useState(null);
+
+    const finishOnboarding = (data) => {
+      setProfile(data);
+      setCurrentScreen("cv");
+    };
+
+    const finishCV = (cv) => {
+      setCvData(cv);
+      setCurrentScreen("dashboard");
+    };
+
+    return (
+      <div>
+        {currentScreen === "onboarding" && (
+          <Module1_Onboarding onFinish={finishOnboarding} />
+        )}
+
+        {currentScreen === "cv" && (
+          <Module2_CV profile={profile} onFinish={finishCV} />
+        )}
+
+        {currentScreen === "dashboard" && (
+          <Module3_Dashboard profile={profile} cv={cvData} />
+        )}
+      </div>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+
+  </script>
+
+</body>
+</html>
