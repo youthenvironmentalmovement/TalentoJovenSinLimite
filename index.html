@@ -50,6 +50,9 @@
   </style>
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+
 <!-- ================= PANEL DE ACCESIBILIDAD UNIVERSAL ================= -->
 <style>
   #accesibilidad-panel {
@@ -169,11 +172,78 @@
   }
 </script>
 <!-- ================= FIN PANEL DE ACCESIBILIDAD ================= -->
-
-
-<body class="text-slate-800">
+<body class="text-slate-800"> 
 
 <script type="text/babel">
+
+  function TechCourse({ onContinue }) {
+
+    const videos = [
+      {
+        title: "Funcionamiento de un teléfono inteligente",
+        url: "https://youtu.be/WJP4hik73I4"
+      },
+      {
+        title: "Cómo usar WhatsApp (básico)",
+        url: "https://youtu.be/K5AtEnbiHLo"
+      },
+      {
+        title: "Cómo navegar en Internet",
+        url: "https://youtu.be/gOgHPSphMPE"
+      },
+      {
+        title: "Cómo usar un teclado y mouse",
+        url: "https://youtu.be/dlyxUdRZWzo"
+      }
+    ];
+
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6 py-10">
+        <div className="max-w-4xl glass-onu p-8 rounded-3xl shadow-xl">
+
+          <h1 className="text-3xl font-extrabold text-[#0033A0] text-center">
+            Curso de Tecnología para Todos 💙
+          </h1>
+
+          <p className="text-center text-slate-600 mt-1">
+            Aprende lo básico para usar esta plataforma. Videos simples y accesibles.
+          </p>
+
+          {/* LISTA DE VIDEOS — SOLO LINKS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            {videos.map((v, i) => (
+              <a
+                key={i}
+                href={v.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-5 rounded-2xl bg-white shadow border hover:shadow-lg hover:border-[#0033A0] transition text-center block"
+              >
+                <p className="text-lg font-bold text-[#0033A0] mb-2">
+                  {v.title}
+                </p>
+
+                <p className="text-sm text-blue-600 underline">
+                  Ver video →
+                </p>
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <button
+              onClick={onContinue}
+              className="px-8 py-3 bg-[#0033A0] text-white font-bold rounded-2xl hover:bg-[#002275]"
+            >
+              Continuar →
+            </button>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
   function Start({ onSelect }) {
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
@@ -209,84 +279,293 @@
 }
 
   // Simple placeholder component for the Business view to avoid undefined component errors
- function Business() {
+function BusinessPortal() {
+
+  // ======== BASE DE TALENTOS APLICADOS (EXTRA COMPLETO) ========
+  const talentosAplicados = [
+    {
+      name: "María López",
+      talento: "Diseño UX / UI",
+      adapt: "Subtítulos + Alto contraste",
+      exp: "3 años en diseño accesible",
+      contacto: "maria@gmail.com"
+    },
+    {
+      name: "Carlos Díaz",
+      talento: "Análisis de Datos",
+      adapt: "Sin videollamadas",
+      exp: "Python, SQL, Power BI",
+      contacto: "carlosdata@gmail.com"
+    },
+    {
+      name: "Ana Torres",
+      talento: "Atención al cliente",
+      adapt: "Chat escrito",
+      exp: "Soporte al usuario durante 2 años",
+      contacto: "ana.torres@gmail.com"
+    },
+    {
+      name: "Luis Mendoza",
+      talento: "Desarrollo Frontend",
+      adapt: "Lector de pantalla",
+      exp: "React, HTML, CSS, WCAG",
+      contacto: "luisdev@gmail.com"
+    }
+  ];
+
+  // ======== FUNDACIONES DE BARRANQUILLA ========
+  const fundaciones = [
+    {
+      name: "Fundación Síndrome de Down del Caribe",
+      tel: "300 123 4567",
+      dir: "Cra 50 # 76-184",
+      link: "https://fsdc.org"
+    },
+    {
+      name: "Asdown Atlántico",
+      tel: "301 555 8210",
+      dir: "Calle 84 # 53-32"
+    },
+    {
+      name: "Fundamores – Fundación Amor y Esperanza",
+      tel: "302 778 9911",
+      dir: "Soledad – Atlántico"
+    },
+    {
+      name: "FANDIC – Fundación Niños con Discapacidad",
+      tel: "304 221 9855",
+      dir: "Calle 47 # 27-190, Soledad"
+    },
+    {
+      name: "Fundación Teletón Atlántico",
+      tel: "310 332 9988",
+      link: "https://teleton.org.co",
+      dir: "Calle 98 # 52-181"
+    }
+  ];
+
   return (
-    <div className="min-h-screen px-4 py-10 flex items-center justify-center">
-      <div className="max-w-4xl w-full glass-onu p-10 rounded-3xl shadow-xl">
+    <div className="min-h-screen px-6 py-10 flex justify-center">
+      <div className="max-w-5xl glass-onu p-10 rounded-3xl shadow-xl">
 
-        <h1 className="text-3xl font-extrabold text-[#0033A0] text-center">
-          Empresas Inclusivas · ODS 8 & 10
+        {/* ======================================================= */}
+        {/*                     PORTAL PRINCIPAL                    */}
+        {/* ======================================================= */}
+        <h1 className="text-4xl font-extrabold text-[#0033A0] text-center">
+          Portal Empresarial Inclusivo · ODS 8 & 10 🏢💙
         </h1>
-
-        <p className="text-center text-slate-600 mt-1">
-          Recursos oficiales para convertir tu organización en un espacio inclusivo
+        <p className="text-center text-slate-600 mt-2 text-lg">
+          La guía más completa para que tu empresa sea 100% inclusiva.
         </p>
 
-        <div className="mt-10 space-y-6">
+        {/* ======================================================= */}
+        {/*                     SECCIÓN 1: INCLUSIÓN                */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-2">
+            1. ¿Cómo hacer que mi empresa sea inclusiva?
+          </h2>
 
-          <div className="bg-white/80 rounded-2xl border p-6 shadow">
-            <h2 className="text-xl font-bold text-[#0033A0]">
-              📘 Pacto por la Inclusión Laboral (MinTrabajo)
-            </h2>
-            <p className="text-sm text-slate-600 mt-2">
-              Lineamientos oficiales para que las empresas implementen prácticas inclusivas.
-            </p>
-            <a
-              href="https://www.mintrabajo.gov.co/"
-              target="_blank"
-              className="inline-block mt-3 px-4 py-2 rounded-xl bg-[#0033A0] text-white text-sm font-semibold"
-            >
-              Visitar página oficial →
-            </a>
+          <ul className="list-disc ml-6 text-slate-700 space-y-2 text-md">
+            <li>Crear políticas de inclusión claras y públicas.</li>
+            <li>Garantizar accesibilidad física, tecnológica y comunicativa.</li>
+            <li>Ofrecer ajustes razonables según la necesidad del trabajador.</li>
+            <li>Diseñar procesos de selección accesibles (sin barreras).</li>
+            <li>Capacitar equipos en trato digno, diversidad y accesibilidad.</li>
+            <li>Alinear prácticas con ODS 8 – Trabajo Decente.</li>
+            <li>Implementar auditorías de inclusión internas.</li>
+          </ul>
+        </div>
+
+        {/* ======================================================= */}
+        {/*                SECCIÓN 2: FUNDACIONES BQ               */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-2">
+            2. Fundaciones aliadas en Barranquilla
+          </h2>
+
+          <div className="space-y-4">
+            {fundaciones.map((f, i) => (
+              <div key={i} className="p-4 bg-white rounded-xl border shadow">
+                <p className="text-lg font-semibold">{f.name}</p>
+                {f.dir && <p className="text-sm text-slate-600">📍 {f.dir}</p>}
+                {f.tel && <p className="text-sm text-slate-600">📞 {f.tel}</p>}
+                {f.link && (
+                  <a href={f.link} target="_blank" className="text-[#0033A0] underline text-sm">
+                    Visitar →
+                  </a>
+                )}
+              </div>
+            ))}
           </div>
+        </div>
 
-          <div className="bg-white/80 rounded-2xl border p-6 shadow">
-            <h2 className="text-xl font-bold text-[#0033A0]">
-              🌍 ONU – Guía Empresas y ODS
-            </h2>
-            <p className="text-sm text-slate-600 mt-2">
-              Cómo alinear tu empresa con los Objetivos de Desarrollo Sostenible.
-            </p>
+        {/* ======================================================= */}
+        {/*                    SECCIÓN 3: RECURSOS                  */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-2">
+            3. Recursos que puedes utilizar
+          </h2>
+
+          <div className="space-y-3">
+            <a
+              href="https://www.mintrabajo.gov.co/documents/20147/59111836/GUIA+PARA+EL+PROCESO+DE+INCLUSION+LABORAL+DE+PCD.pdf/1d8631c0-58d5-8626-69cb-780b169fcdf7?version=1.0"
+              target="_blank"
+              className="block p-4 bg-white rounded-xl border shadow"
+            >
+              📘 Pacto por la Inclusión Laboral – MinTrabajo
+            </a>
+
             <a
               href="https://www.un.org/sustainabledevelopment/es/"
               target="_blank"
-              className="inline-block mt-3 px-4 py-2 rounded-xl bg-[#0033A0] text-white text-sm font-semibold"
+              className="block p-4 bg-white rounded-xl border shadow"
             >
-              Leer guía completa →
+              🌍 Guía ONU para Empresas y ODS
             </a>
-          </div>
 
-          <div className="bg-white/80 rounded-2xl border p-6 shadow">
-            <h2 className="text-xl font-bold text-[#0033A0]">
-              🧩 Manual de Inclusión Laboral · SENA
-            </h2>
-            <p className="text-sm text-slate-600 mt-2">
-              Recomendaciones prácticas para contratar y apoyar trabajadores con discapacidad.
-            </p>
             <a
-              href="https://www.sena.edu.co/"
+              href="https://www.sena.edu.co"
               target="_blank"
-              className="inline-block mt-3 px-4 py-2 rounded-xl bg-[#0033A0] text-white text-sm font-semibold"
+              className="block p-4 bg-white rounded-xl border shadow"
             >
-              Consultar manual →
+              🧩 SENA – Manual Inclusión Laboral
+            </a>
+
+            <a
+              href="https://wcag.com"
+              target="_blank"
+              className="block p-4 bg-white rounded-xl border shadow"
+            >
+              🔎 WCAG 2.1 – Estándares globales de accesibilidad
             </a>
           </div>
-
         </div>
 
-        <div className="mt-10 text-center">
-          <button
-            className="px-8 py-3 bg-[#0033A0] text-white font-bold rounded-2xl shadow hover:bg-[#002275]"
-            onClick={() => alert("Gracias por tu interés 💙")}
+        {/* ======================================================= */}
+        {/*                   SECCIÓN 4: HERRAMIENTAS               */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-2">
+            4. Herramientas inclusivas recomendadas
+          </h2>
+
+          <ul className="list-disc ml-6 text-slate-700 space-y-2">
+            <li>NVDA – lector de pantalla</li>
+            <li>JAWS – lector profesional</li>
+            <li>Google Live Transcribe</li>
+            <li>Herramientas de transcripción Zoom</li>
+            <li>Voice Access – control por voz</li>
+            <li>Lupa de Windows y Mac</li>
+            <li>Contrast Checker AA–AAA</li>
+          </ul>
+        </div>
+
+        {/* ======================================================= */}
+        {/*          SECCIÓN 5: TALENTOS QUE APLICARON              */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-2">
+            5. Personas que aplicaron a tu empresa
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {talentosAplicados.map((t, i) => (
+              <div key={i} className="p-4 bg-white rounded-xl border shadow">
+                <p className="text-lg font-bold text-[#0033A0]">{t.name}</p>
+                <p className="text-sm">🎨 Talento: {t.talento}</p>
+                <p className="text-sm">♿ Adaptación: {t.adapt}</p>
+                <p className="text-sm">📘 Experiencia: {t.exp}</p>
+                <p className="text-sm text-[#0033A0]">✉ {t.contacto}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ======================================================= */}
+        {/*                  SECCIÓN 6: CAPACITACIÓN                */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-2">
+            6. Capacitación para empresas
+          </h2>
+
+          <p className="text-slate-700">
+            Cursos oficiales y gratuitos:
+          </p>
+
+          <ul className="list-disc ml-6 mt-3 space-y-2 text-slate-700">
+            <li>Curso de inclusión laboral – SENA</li>
+            <li>Accesibilidad digital WCAG – Coursera</li>
+            <li>Lengua de Señas Colombiana – INSOR</li>
+            <li>Sensibilización sobre discapacidad – MinEducación</li>
+            <li>Trabajo inclusivo – Pacto Global ONU</li>
+          </ul>
+        </div>
+
+        {/* ======================================================= */}
+        {/*                SECCIÓN 7: PDF DESCARGABLE               */}
+        {/* ======================================================= */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0033A0] mb-3">
+            7. Descargar guía completa (PDF)
+          </h2>
+
+          <a
+            href="empresa_inclusiva_checklist.pdf"
+            target="_blank"
+            className="px-6 py-3 bg-[#0033A0] text-white rounded-xl font-bold shadow hover:bg-[#002275]"
           >
-            Unirme como empresa inclusiva
-          </button>
+            Descargar Guía PDF →
+          </a>
         </div>
+
+        {/* ======================================================= */}
+{/*                       BOTÓN FINAL                       */}
+{/* ======================================================= */}
+<div className="mt-14 text-center">
+  <button
+    onClick={() => {
+      alert("🎉 ¡Felicidades! Ya eres una empresa inclusiva 🎉");
+
+      // Confeti (simple y funcional)
+      var duration = 2 * 1000;
+      var end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 7,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 7,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }}
+    className="px-10 py-4 bg-[#0033A0] text-white font-bold rounded-2xl shadow-xl hover:bg-[#002275]"
+  >
+    Unirme como empresa inclusiva
+  </button>
+</div>
+
 
       </div>
     </div>
   );
 }
+
+
 
 </script>
 
@@ -1279,21 +1558,27 @@ function Module3_Dashboard({ profile, cv }) {
     </div>
   );
 }
+
+
 </script>
 
 <script type="text/babel">
 function App() {
   const { useState } = React;
 
-  const [screen, setScreen] = useState("start");
+  const [screen, setScreen] = useState("techcourse");  
   const [profile, setProfile] = useState(null);
   const [cvData, setCvData] = useState(null);
 
   return (
     <>
+      {screen === "techcourse" && (
+        <TechCourse onContinue={() => setScreen("start")} />
+      )}
+
       {screen === "start" && <Start onSelect={setScreen} />}
 
-      {screen === "business" && <Business />}
+      {screen === "business" && <BusinessPortal />}
 
       {screen === "talent" && (
         <Module1_Onboarding
@@ -1319,49 +1604,8 @@ function App() {
       )}
     </>
   );
-
-  // ADAPTACIONES REALES SEGÚN DISCAPACIDAD
-React.useEffect(() => {
-
-  // === VISUAL (1) ===
-  if (profile.disabilities.includes(1)) {
-    // Activar lector de pantalla
-    const audio = new SpeechSynthesisUtterance(
-      "Lector de pantalla activado. Modo de accesibilidad visual en funcionamiento."
-    );
-    speechSynthesis.speak(audio);
-
-    // Modo alto contraste
-    document.body.classList.add("high-contrast");
-  } else {
-    document.body.classList.remove("high-contrast");
-  }
-
-  // === AUDITIVA (2) ===
-  if (profile.disabilities.includes(2)) {
-    console.log("Modo auditivo desactivado. Subtítulos activos.");
-  }
-
-  // === MOTRIZ (3) ===
-  if (profile.disabilities.includes(3)) {
-    console.log("Control por voz activado (aquí puedes agregar comandos).");
-  }
-
-  // === COGNITIVA (4) ===
-  if (profile.disabilities.includes(4)) {
-    document.documentElement.style.scrollBehavior = "auto";
-    console.log("Modo cognitivo: interfaz simplificada.");
-  }
-
-  // === PSICOSOCIAL (5) ===
-  if (profile.disabilities.includes(5)) {
-    document.body.style.transition = "all 0.5s ease";
-    console.log("Modo psicosocial: interfaz calmada.");
-  }
-
-}, [profile.disabilities]);
-
 }
+
 
   ReactDOM.render(<App />, document.getElementById("root"));
 
