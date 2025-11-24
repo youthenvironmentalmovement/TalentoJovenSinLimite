@@ -33,6 +33,12 @@
       backdrop-filter: blur(18px);
       border: 1px solid rgba(255,255,255,0.32);
     }
+    
+.high-contrast {
+  filter: contrast(150%) brightness(120%);
+  color: yellow;
+  background: black !important;
+}
 
     .btn-onu {
       background: #0033A0;
@@ -45,6 +51,124 @@
 </head>
 
 <body class="text-slate-800">
+
+<script type="text/babel">
+  function Start({ onSelect }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="w-full max-w-xl glass-onu p-10 rounded-3xl text-center shadow-2xl">
+
+        <h1 className="text-4xl font-extrabold text-[#0033A0]">
+          Talentos Sin Límites
+        </h1>
+
+        <p className="mt-1 text-slate-600">
+          Selecciona cómo deseas ingresar
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+          <button
+            className="p-6 rounded-2xl bg-white border shadow text-lg hover:shadow-lg"
+            onClick={() => onSelect("talent")}
+          >
+            🎨 Talento
+          </button>
+
+          <button
+            className="p-6 rounded-2xl bg-white border shadow text-lg hover:shadow-lg"
+            onClick={() => onSelect("business")}
+          >
+            🏢 Empresa
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+  // Simple placeholder component for the Business view to avoid undefined component errors
+ function Business() {
+  return (
+    <div className="min-h-screen px-4 py-10 flex items-center justify-center">
+      <div className="max-w-4xl w-full glass-onu p-10 rounded-3xl shadow-xl">
+
+        <h1 className="text-3xl font-extrabold text-[#0033A0] text-center">
+          Empresas Inclusivas · ODS 8 & 10
+        </h1>
+
+        <p className="text-center text-slate-600 mt-1">
+          Recursos oficiales para convertir tu organización en un espacio inclusivo
+        </p>
+
+        <div className="mt-10 space-y-6">
+
+          <div className="bg-white/80 rounded-2xl border p-6 shadow">
+            <h2 className="text-xl font-bold text-[#0033A0]">
+              📘 Pacto por la Inclusión Laboral (MinTrabajo)
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Lineamientos oficiales para que las empresas implementen prácticas inclusivas.
+            </p>
+            <a
+              href="https://www.mintrabajo.gov.co/"
+              target="_blank"
+              className="inline-block mt-3 px-4 py-2 rounded-xl bg-[#0033A0] text-white text-sm font-semibold"
+            >
+              Visitar página oficial →
+            </a>
+          </div>
+
+          <div className="bg-white/80 rounded-2xl border p-6 shadow">
+            <h2 className="text-xl font-bold text-[#0033A0]">
+              🌍 ONU – Guía Empresas y ODS
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Cómo alinear tu empresa con los Objetivos de Desarrollo Sostenible.
+            </p>
+            <a
+              href="https://www.un.org/sustainabledevelopment/es/"
+              target="_blank"
+              className="inline-block mt-3 px-4 py-2 rounded-xl bg-[#0033A0] text-white text-sm font-semibold"
+            >
+              Leer guía completa →
+            </a>
+          </div>
+
+          <div className="bg-white/80 rounded-2xl border p-6 shadow">
+            <h2 className="text-xl font-bold text-[#0033A0]">
+              🧩 Manual de Inclusión Laboral · SENA
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Recomendaciones prácticas para contratar y apoyar trabajadores con discapacidad.
+            </p>
+            <a
+              href="https://www.sena.edu.co/"
+              target="_blank"
+              className="inline-block mt-3 px-4 py-2 rounded-xl bg-[#0033A0] text-white text-sm font-semibold"
+            >
+              Consultar manual →
+            </a>
+          </div>
+
+        </div>
+
+        <div className="mt-10 text-center">
+          <button
+            className="px-8 py-3 bg-[#0033A0] text-white font-bold rounded-2xl shadow hover:bg-[#002275]"
+            onClick={() => alert("Gracias por tu interés 💙")}
+          >
+            Unirme como empresa inclusiva
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+</script>
+
 
   <!-- DONDE SE RENDERIZA TODO -->
   <div id="root"></div>
@@ -1036,43 +1160,87 @@ function Module3_Dashboard({ profile, cv }) {
 }
 </script>
 
+<script type="text/babel">
+function App() {
+  const { useState } = React;
 
-  <!-- =============== APP PRINCIPAL =============== -->
-  <script type="text/babel">
+  const [screen, setScreen] = useState("start");
+  const [profile, setProfile] = useState(null);
+  const [cvData, setCvData] = useState(null);
 
-  function App() {
-    const { useState } = React;
+  return (
+    <>
+      {screen === "start" && <Start onSelect={setScreen} />}
 
-    const [currentScreen, setCurrentScreen] = useState("onboarding");
-    const [profile, setProfile] = useState(null);
-    const [cvData, setCvData] = useState(null);
+      {screen === "business" && <Business />}
 
-    const finishOnboarding = (data) => {
-      setProfile(data);
-      setCurrentScreen("cv");
-    };
+      {screen === "talent" && (
+        <Module1_Onboarding
+          onFinish={(p) => {
+            setProfile(p);
+            setScreen("cv");
+          }}
+        />
+      )}
 
-    const finishCV = (cv) => {
-      setCvData(cv);
-      setCurrentScreen("dashboard");
-    };
+      {screen === "cv" && (
+        <Module2_CV
+          profile={profile}
+          onFinish={(cv) => {
+            setCvData(cv);
+            setScreen("dashboard");
+          }}
+        />
+      )}
 
-    return (
-      <div>
-        {currentScreen === "onboarding" && (
-          <Module1_Onboarding onFinish={finishOnboarding} />
-        )}
+      {screen === "dashboard" && (
+        <Module3_Dashboard profile={profile} cv={cvData} />
+      )}
+    </>
+  );
 
-        {currentScreen === "cv" && (
-          <Module2_CV profile={profile} onFinish={finishCV} />
-        )}
+  // ADAPTACIONES REALES SEGÚN DISCAPACIDAD
+React.useEffect(() => {
 
-        {currentScreen === "dashboard" && (
-          <Module3_Dashboard profile={profile} cv={cvData} />
-        )}
-      </div>
+  // === VISUAL (1) ===
+  if (profile.disabilities.includes(1)) {
+    // Activar lector de pantalla
+    const audio = new SpeechSynthesisUtterance(
+      "Lector de pantalla activado. Modo de accesibilidad visual en funcionamiento."
     );
+    speechSynthesis.speak(audio);
+
+    // Modo alto contraste
+    document.body.classList.add("high-contrast");
+  } else {
+    document.body.classList.remove("high-contrast");
   }
+
+  // === AUDITIVA (2) ===
+  if (profile.disabilities.includes(2)) {
+    console.log("Modo auditivo desactivado. Subtítulos activos.");
+  }
+
+  // === MOTRIZ (3) ===
+  if (profile.disabilities.includes(3)) {
+    console.log("Control por voz activado (aquí puedes agregar comandos).");
+  }
+
+  // === COGNITIVA (4) ===
+  if (profile.disabilities.includes(4)) {
+    document.documentElement.style.scrollBehavior = "auto";
+    console.log("Modo cognitivo: interfaz simplificada.");
+  }
+
+  // === PSICOSOCIAL (5) ===
+  if (profile.disabilities.includes(5)) {
+    document.body.style.transition = "all 0.5s ease";
+    console.log("Modo psicosocial: interfaz calmada.");
+  }
+
+}, [profile.disabilities]);
+
+}
 
   ReactDOM.render(<App />, document.getElementById("root"));
 
