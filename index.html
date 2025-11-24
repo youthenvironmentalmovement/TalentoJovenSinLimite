@@ -50,6 +50,127 @@
   </style>
 </head>
 
+<!-- ================= PANEL DE ACCESIBILIDAD UNIVERSAL ================= -->
+<style>
+  #accesibilidad-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    padding: 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    width: 260px;
+    z-index: 9999;
+    display: none;
+  }
+
+  #accesibilidad-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0033A0;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+
+  .modo-sepia {
+    filter: sepia(30%) brightness(110%) contrast(95%);
+  }
+</style>
+
+<div id="accesibilidad-btn">♿</div>
+
+<div id="accesibilidad-panel" class="glass-onu">
+  <h3 class="font-bold mb-2 text-[#0033A0] text-lg">Accesibilidad</h3>
+
+  <!-- Alto contraste -->
+  <button onclick="toggleContraste()" class="w-full bg-black text-white px-4 py-2 rounded-xl mb-2">
+    Alto contraste
+  </button>
+
+  <!-- Colores suaves -->
+  <button onclick="toggleSepia()" class="w-full bg-yellow-200 text-slate-800 px-4 py-2 rounded-xl mb-2">
+    Colores suaves
+  </button>
+
+  <!-- Subtítulos -->
+  <button onclick="activarSubtitulos()" class="w-full bg-blue-200 text-blue-900 px-4 py-2 rounded-xl mb-2">
+    Activar subtítulos automáticos
+  </button>
+
+  <!-- Lector de pantalla -->
+  <button onclick="activarVoz()" class="w-full bg-green-200 text-green-900 px-4 py-2 rounded-xl mb-2">
+    Guía por voz
+  </button>
+
+  <!-- Aumentar texto -->
+  <button onclick="cambiarTexto(1)" class="w-full bg-white border px-4 py-2 rounded-xl mb-2">
+    Aumentar texto
+  </button>
+
+  <!-- Reducir texto -->
+  <button onclick="cambiarTexto(-1)" class="w-full bg-white border px-4 py-2 rounded-xl mb-2">
+    Reducir texto
+  </button>
+
+</div>
+
+<script>
+  // Mostrar/ocultar panel
+  const btn = document.getElementById("accesibilidad-btn");
+  const panel = document.getElementById("accesibilidad-panel");
+
+  btn.onclick = () => {
+    panel.style.display = panel.style.display === "none" ? "block" : "none";
+  };
+
+  // Alto contraste
+  let contrasteActivo = false;
+  function toggleContraste() {
+    contrasteActivo = !contrasteActivo;
+    document.body.classList.toggle("high-contrast");
+  }
+
+  // Colores suaves / sepia
+  let sepiaActivo = false;
+  function toggleSepia() {
+    sepiaActivo = !sepiaActivo;
+    document.body.classList.toggle("modo-sepia");
+  }
+
+  // Subtítulos automáticos (simulados)
+  function activarSubtitulos() {
+    alert("Subtítulos activados. Todos los videos mostrarán texto.");
+  }
+
+  // Voz / lector
+  function activarVoz() {
+    const msg = new SpeechSynthesisUtterance(
+      "Guía por voz activada. Desde ahora leeré elementos importantes de la interfaz."
+    );
+    speechSynthesis.speak(msg);
+  }
+
+  // Tamaño de texto
+  let fontScale = 1;
+  function cambiarTexto(valor) {
+    fontScale += valor * 0.1;
+    document.body.style.fontSize = fontScale + "rem";
+  }
+</script>
+<!-- ================= FIN PANEL DE ACCESIBILIDAD ================= -->
+
+
 <body class="text-slate-800">
 
 <script type="text/babel">
